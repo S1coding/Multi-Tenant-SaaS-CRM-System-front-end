@@ -18,8 +18,8 @@ A modern Customer Relationship Management system built with React, supporting mu
 ## Setup
 1. Clone the repository
 ```bash
-git clone https://github.com/YourUsername/Multi-Tenant-SaaS-CRM-System.git
-cd Multi-Tenant-SaaS-CRM-System
+git clone https://github.com/YourUsername/Multi-Tenant-SaaS-CRM-System-front-end.git
+cd Multi-Tenant-SaaS-CRM-System-front-end
 ```
 
 2. Install dependencies
