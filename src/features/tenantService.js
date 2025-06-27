@@ -1,9 +1,16 @@
-import axios from 'axios';
-import { serverLink } from '../utility/serverConfig';
+import axios from "axios";
+import { serverLink } from "../utility/serverConfig";
 
 const API_HEADERS = {
-  'Content-Type': 'application/json'
+  "Content-Type": "application/json",
 };
+
+export function generateHeaders(headers = {}) {
+  return {
+    ...API_HEADERS,
+    ...headers,
+  };
+}
 
 /**
  * Register a new tenant
@@ -18,8 +25,26 @@ const API_HEADERS = {
  */
 export async function registerTenant(tenantData) {
   try {
+      console.log({
+        tenantData,
+        headers: generateHeaders({ "X-Company": tenantData.company })
+      });
     const response = await axios.post(
-      serverLink('TENANT_REGISTER'),
+      serverLink("TENANT_REGISTER"),
+      tenantData,
+      { headers: generateHeaders({ "X-Company": tenantData.company }) }
+    );
+    return response.data;
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || error.message;
+    throw new Error(`Registration failed: ${errorMessage}`);
+  }
+}
+
+export async function registerAdmin(tenantData) {
+  try {
+    const response = await axios.post(
+      serverLink("ADMIN_REGISTER"),
       tenantData,
       { headers: API_HEADERS }
     );
@@ -32,11 +57,15 @@ export async function registerTenant(tenantData) {
 
 export async function generateJwt(tenantData) {
   try {
-    const response = await axios.post(
-      serverLink('TENANT_JWT'),
-      tenantData,
-      { headers: API_HEADERS }
-    );
+    console.log("Sending generateJwt request:", {
+      url: serverLink("TENANT_JWT"),
+      data: tenantData,
+      headers: generateHeaders({ "X-Company": tenantData.company }),
+    });
+
+    const response = await axios.post(serverLink("TENANT_JWT"), tenantData, {
+      headers: generateHeaders({ "X-Company": tenantData.company }),
+    });
     return response.data;
   } catch (error) {
     const errorMessage = error.response?.data?.message || error.message;

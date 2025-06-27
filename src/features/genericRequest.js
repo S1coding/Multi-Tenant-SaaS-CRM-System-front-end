@@ -1,11 +1,11 @@
 import { serverLink } from "../utility/serverConfig";
 import axios from "axios";
-import { getToken } from "../utility/jwtStorage";
+import {getJwtTokenCookie, getCompanyCookie} from "../utility/cookieUtils";
 
 const getAuthHeaders = () => {
   return {
     'Content-Type': 'application/json',
-    'Authorization': `Bearer ${getToken()}`
+    'Authorization': `Bearer ${getJwtTokenCookie()}`,
   };
 };
 
@@ -32,12 +32,15 @@ export async function postToServer(requestName, data) {
 export async function getToServer(requestName, data = null) {
   try {
     const config = {
-      headers: getAuthHeaders()
+      headers: getAuthHeaders(),
+      params: {
+        company: getCompanyCookie(),
+      }
     };
     
     const response = await axios.get(
       serverLink(requestName),
-      data ? { ...config, data } : config
+      config
     );
     return response.data;
   } catch (error) {

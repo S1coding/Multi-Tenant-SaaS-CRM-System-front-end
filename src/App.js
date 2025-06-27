@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import RegisterPage from './pages/access/RegisterPage';
+import RegisterAdminPage from './pages/access/RegisterAdminTab';
 import LoginPage from './pages/access/LoginPage';
 import ContactsPage from './pages/contacts/ContactsPage';
 import ReportsPage from './pages/reports/ReportsPage';
+import RegisterPage from './pages/access/RegisterPage';
 import DealsPage from './pages/deals/DealsPage';
 import TasksPage from './pages/tasks/TasksPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
@@ -11,7 +12,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<DashboardPage />}/>
+        <Route path="/" element={<Navigate to="/login" replace />}/>
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/exit" element={<Navigate to="/login" replace />} />

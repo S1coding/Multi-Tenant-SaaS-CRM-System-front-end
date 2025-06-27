@@ -15,7 +15,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import SendIcon from '@mui/icons-material/Send';
 import { validateLoginForm } from '../formValidation';
 import { generateJwt } from '../../../../../features/tenantService';
-import { saveToken, getToken, removeToken} from '../../../../../utility/jwtStorage';
+import { saveJwtTokenCookie, saveCompanyCookie} from '../../../../../utility/cookieUtils';
 import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
@@ -25,6 +25,7 @@ const LoginForm = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    company: '',
     rememberMe: false,
   });
   const [errors, setErrors] = useState({});
@@ -55,11 +56,13 @@ const LoginForm = () => {
         const response = await generateJwt({
           email: formData.email,
           password: formData.password,
-          rememberMe: formData.rememberMe
+          company: formData.company,
+          //rememberMe: formData.rememberMe
         });
         
         console.log('Login successful:', response);
-        saveToken(response.token)
+        saveJwtTokenCookie(response.token)
+        saveCompanyCookie(formData.company);
         setSubmitMessage({ 
           type: 'success', 
           text: 'Login successful! Redirecting...' 
@@ -125,6 +128,21 @@ const LoginForm = () => {
             id="password"
             autoComplete="current-password"
             value={formData.password}
+            onChange={handleChange}
+            error={!!errors.password}
+            helperText={errors.password}
+            disabled={isSubmitting}
+          />
+        </Grid>
+                <Grid item xs={12}>
+          <TextField
+            required
+            fullWidth
+            name="company"
+            label="company"
+            id="company"
+            autoComplete="company"
+            value={formData.company}
             onChange={handleChange}
             error={!!errors.password}
             helperText={errors.password}

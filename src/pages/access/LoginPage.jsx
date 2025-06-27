@@ -5,8 +5,8 @@ import LoginForm from './components/auth/forms/LoginForm';
 const LoginPage = () => {
   return (
     <AuthLayout
-      title="Access Page"
-      subtitle="Enter your credentials to access the server"
+      title="Company Access Page (schema creation page)"
+      subtitle="Enter company account credentials"
       footerText="Don't have an account?"
       footerLink="/register"
       footerLinkText="Sign up"
