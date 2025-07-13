@@ -8,6 +8,7 @@ import DealsPage from './pages/deals/DealsPage';
 import TasksPage from './pages/tasks/TasksPage';
 import DashboardPage from './pages/dashboard/DashboardPage';
 import SettingsPage from './pages/settings/SettingsPage';
+import VerifyEmail from './pages/access/verifyEmail';
 function App() {
   return (
     <BrowserRouter>
@@ -22,6 +23,7 @@ function App() {
         <Route path="/contacts" element={<ContactsPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
       </Routes>
     </BrowserRouter>
   );
